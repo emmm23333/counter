@@ -1,0 +1,19 @@
+{
+    "log": {
+        "format": "console",
+        "stdout": true,
+        "path": "logs/tool.log",
+        "level": "debug",
+        "max": 10,
+        "maxAge": 30,
+        "localtime": true
+    },
+    "http": {
+        "port": ":8011",
+        "fileKey": "file"
+    },
+    "algo": {
+        "modelPath": "libobject/models",
+        "tag": "gangguan"
+    }
+}
