@@ -52,6 +52,11 @@ func uploadHandler(c *gin.Context) {
 	}
 	u1 := uuid.Must(uuid.NewV4(), nil)
 	dst := u1.String() + "-" + headerFile.Filename
+	defer func() {
+		if err := os.Remove(dst); err != nil {
+			common.Log.Errorf("remove file error: %v", err)
+		}
+	}()
 	if err := c.SaveUploadedFile(headerFile, dst); err != nil {
 		resp.Code = 202
 		resp.Msg = "save file error"
