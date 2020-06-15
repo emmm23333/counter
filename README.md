@@ -18,7 +18,7 @@
 ```
 * 客户端运行
 ```
-  counter --config=.conf.json client --file=xxx.jpg
+  counter --config=.conf.json upload --file=xxx.jpg
 ```
   默认配置文件为.conf.json
 #### docker运行服务
