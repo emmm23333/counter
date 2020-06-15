@@ -36,7 +36,7 @@ func algoInit(modelPath, tag string) error {
 func algoProcess(img string, rect AlgoRect) (error, []AlgoRect) {
 	gMutex.Lock()
 	defer gMutex.Unlock()
-	fmt.Printf("cimg:%s\n", img)
+	// fmt.Printf("cimg:%s\n", img)
 	cimg := C.CString(img)
 	defer C.free(unsafe.Pointer(cimg))
 

@@ -49,7 +49,7 @@ func upolad() {
 	bodyBuffer := &bytes.Buffer{}
 	bodyWriter := multipart.NewWriter(bodyBuffer)
 
-	bodyWriter.WriteField("area", "456")
+	bodyWriter.WriteField("rect", `{"x":0,"y":0,"width":480,"height":960}`)
 	name := filepath.Base(uploadFile)
 	// fmt.Printf("file path:%s name:%s\n", uploadFile, name)
 	fileWriter, _ := bodyWriter.CreateFormFile("file", name)
