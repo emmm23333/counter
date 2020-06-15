@@ -14,9 +14,9 @@ import (
 
 type AlgoRect struct {
 	X      int `json:"x"`
-	Y      int `json:"Y"`
+	Y      int `json:"y"`
 	Width  int `json:"width"`
-	Height int `json:"Height"`
+	Height int `json:"height"`
 }
 
 type AlgoResponse struct {
@@ -33,7 +33,7 @@ func Run() {
 	}
 	common.Log.Debugf("algo init success")
 	router := gin.Default()
-	router.POST("/upload", uploadHandler)
+	router.POST(viper.GetString("http.uri"), uploadHandler)
 	router.Run(viper.GetString("http.port"))
 }
 
@@ -91,9 +91,9 @@ func uploadHandler(c *gin.Context) {
 		return
 	}
 	common.Log.Debugf("algo process succeed")
-	for k, v := range rects {
-		common.Log.Debugf("[%d]rect: %d %d %d %d", k, v.X, v.Y, v.Width, v.Height)
-	}
+	// for k, v := range rects {
+	// 	common.Log.Debugf("[%d]rect: %d %d %d %d", k, v.X, v.Y, v.Width, v.Height)
+	// }
 
 	resp.Rects = rects
 	uploadResponse(c, resp)

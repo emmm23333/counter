@@ -10,6 +10,7 @@ package service
 import "C"
 
 import (
+	"counter/common"
 	"fmt"
 	"sync"
 	"unsafe"
@@ -47,7 +48,7 @@ func algoProcess(img string, rect AlgoRect) (error, []AlgoRect) {
 	cRect.x = C.int(rect.X)
 	cRect.y = C.int(rect.Y)
 	cRect.width = C.int(rect.Width)
-	cRect.width = C.int(rect.Height)
+	cRect.height = C.int(rect.Height)
 
 	ret := C.detect_objects(gAlgoHandler, cimg, cRect, &cRects, &cInt)
 	unsafePtr := unsafe.Pointer(cRects)
@@ -60,8 +61,9 @@ func algoProcess(img string, rect AlgoRect) (error, []AlgoRect) {
 		return fmt.Errorf("algo process cRects nullptr"), nil
 	}
 	if goInt == 0 {
-		return nil, nil
+		return fmt.Errorf("algo porocess not detectd"), nil
 	}
+	common.Log.Debugf("ret: %d, goInt: %d, rects: %v", ret, goInt, cRects)
 	arrayPtr := (*[1 << 30]C.HRect)(unsafePtr)
 	goSlice := arrayPtr[0:goInt:goInt]
 	algoRet := make([]AlgoRect, 1)

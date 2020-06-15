@@ -10,7 +10,8 @@
     },
     "http": {
         "port": ":8011",
-        "fileKey": "file"
+        "fileKey": "file",
+        "uri": "/recognize"
     },
     "algo": {
         "modelPath": "libobject/models",
