@@ -66,7 +66,7 @@ func algoProcess(img string, rect AlgoRect) (error, []AlgoRect) {
 	common.Log.Debugf("ret: %d, goInt: %d, rects: %v", ret, goInt, cRects)
 	arrayPtr := (*[1 << 30]C.HRect)(unsafePtr)
 	goSlice := arrayPtr[0:goInt:goInt]
-	algoRet := make([]AlgoRect, 1)
+	algoRet := make([]AlgoRect, 0)
 	for _, v := range goSlice {
 		algoRet = append(algoRet, AlgoRect{
 			X:      int(v.x),
