@@ -16,5 +16,6 @@
     "algo": {
         "modelPath": "libobject/models",
         "tag": "gangguan"
-    }
+    },
+    "license": ""
 }

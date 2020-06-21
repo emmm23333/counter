@@ -39,3 +39,4 @@ value:binary
 - 204: form里没有rect
 - 205: rect反序列化失败
 - 206: 算法处理失败（错误信息在msg里）
+- 207: license校验失败

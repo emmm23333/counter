@@ -16,8 +16,6 @@ import (
 	"unsafe"
 )
 
-// var gAlgoHandler *C.HuObjManager
-
 var gAlgoHandler unsafe.Pointer
 var gMutex sync.Mutex
 

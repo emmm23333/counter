@@ -6,11 +6,15 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
 	"github.com/spf13/viper"
 )
+
+const gLicense = "94172671-49e6-49d4-a64f-d91d68119fde"
+const gExpireTime = "2020-07-21 12:00:00"
 
 type AlgoRect struct {
 	X      int `json:"x"`
@@ -37,10 +41,34 @@ func Run() {
 	router.Run(viper.GetString("http.port"))
 }
 
+func checkvalidity() bool {
+	if viper.GetString("license") == gLicense {
+		common.Log.Debugf("license check passed")
+		return true
+	}
+	now := time.Now()
+	expire, err := time.ParseInLocation("2006-01-02 15:04:05", gExpireTime, time.Local)
+	common.Log.Warnf("license not right, program will expire at %s", expire)
+	if err != nil {
+		return false
+	}
+	if now.Before(expire) {
+		return true
+	}
+	return false
+}
+
 func uploadHandler(c *gin.Context) {
 	resp := &AlgoResponse{
 		Code: 200,
 		Msg:  "success",
+	}
+
+	if !checkvalidity() {
+		resp.Code = 207
+		resp.Msg = "check license failed"
+		uploadResponse(c, resp)
+		return
 	}
 
 	headerFile, err := c.FormFile(viper.GetString("http.fileKey"))
