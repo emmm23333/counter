@@ -32,7 +32,12 @@ func algoInit(modelPath, tag string) error {
 	return nil
 }
 
-func algoProcess(img string, rect AlgoRect) (error, []AlgoRect) {
+func algoProcess(img string, rect AlgoRect) (err error, rects []AlgoRect) {
+	defer func() {
+		if p := recover(); p != nil {
+			err = fmt.Errorf("panic: %v", p)
+		}
+	}()
 	gMutex.Lock()
 	defer gMutex.Unlock()
 	// fmt.Printf("cimg:%s\n", img)
